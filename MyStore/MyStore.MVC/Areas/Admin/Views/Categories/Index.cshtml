@@ -1,0 +1,46 @@
+﻿@model MyStore.Application.ViewModels.CategoryViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-2 col-sm-6 mb-3">
+    <a asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary">Add New Category</a>
+</div>
+
+@if (!Model.Categories.Any())
+{
+    <div class="alert alert-warning" role="alert">
+        <i class="bi-alarm bi-exclamation-triangle"></i>
+        No Categories Found!
+    </div>
+}
+else
+{
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-4">Name</th>
+                    <th class="col-8">Picture</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model.Categories)
+                {
+                    <tr class="d-flex parent">
+                        <td class="col-3">@category.Name</td>
+                        <td class="col-6"><img src="/images/categories/@category.ImageUrl" style="width:150px;height:150px; object-fit:contain" class="card-img-top img-fluid" alt="@category.Name"></td>
+                        <td class="col-3">
+                            <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.ID" class="fas fa-edit text-primary"></a>
+                            <a href="javascript:;" data-id="@category.ID" class="fas fa-trash text-danger js-delete"></a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
