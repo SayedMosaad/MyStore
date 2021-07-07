@@ -12,16 +12,14 @@ namespace MyStore.Application.ViewModels
     public class CategoryViewModel
     {
         public IEnumerable<Category> Categories { get; set; }
+        public int Id { get; set; }
 
-        //public int Id { get; set; }
-        //[Required]
-        //public string Name { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-        //public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
+        public IFormFile Image { get; set; }
 
-        //[Display(Name ="Category Image")]
-        //public IFormFile File { get; set; }
-        
     }
     
 }

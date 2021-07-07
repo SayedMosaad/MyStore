@@ -1,0 +1,49 @@
+﻿@model MyStore.Application.ViewModels.CategoryViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<form asp-controller="Categories" asp-action="Create" method="post" enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <label class="col-md-2 col-sm-6 text-muted" asp-for="Name"></label>
+
+        <div class="col-md-8 col-sm-6">
+            <input type="text" class="form-control" asp-for="Name" maxlength="250" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Image" class="form-label col-md-2 col-sm-6"></label>
+        <div class="col-md-8 col-sm-6">
+            <input class="form-control" type="file" asp-for="Image">
+        </div>
+    </div>
+    <div class="row">
+        <div id="picture-container" class="d-none col-md-4 offset-4">
+            <img src="@string.Empty" alt="Category Image" class="img-thumbnail img-fluid" style="width:150px;height:150px; " />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4"><i class="bi bi-check"></i>Add Category</button>
+    <a asp-action="Index" class="btn btn-outline-secondary mt-4"><i class="bi bi-x"></i>Cancel</a>
+</form>
+@section Scripts
+{
+    <partial name="_Validation" />
+
+    <script>
+        $(document).ready(function () {
+            $("#Picture").on('change', function () {
+                var selectedFile = $(this).val().split('\\').pop();
+                $(this).siblings('label').text(selectedFile);
+                var picturecontainer = $('#picture-container');
+                var image = window.URL.createObjectURL(this.files[0]);
+                picturecontainer.removeClass('d-none');
+                picturecontainer.find('img').attr('src', '/images/categories/' +image);
+            });
+        });
+    </script>
+}

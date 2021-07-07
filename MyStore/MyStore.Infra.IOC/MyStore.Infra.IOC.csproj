@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MyStore.Application\MyStore.Application.csproj" />
+    <ProjectReference Include="..\MyStore.Infra.Bus\MyStore.Infra.Bus.csproj" />
     <ProjectReference Include="..\MyStore.Infra.Data\MyStore.Infra.Data.csproj" />
   </ItemGroup>
 

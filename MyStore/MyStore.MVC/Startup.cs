@@ -1,18 +1,17 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyStore.Application.Interfaces;
+using MyStore.Application.Services;
 using MyStore.Domain.Models;
 using MyStore.Infra.Data.Context;
 using MyStore.Infra.IOC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using NToastNotify;
 
 namespace MyStore.MVC
 {
@@ -28,14 +27,24 @@ namespace MyStore.MVC
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMvc(options => options.EnableEndpointRouting = false).AddNToastNotifyToastr(new ToastrOptions()
+            {
+                ProgressBar = true,
+                PositionClass = ToastPositions.TopRight,
+                PreventDuplicates = true,
+                CloseButton = true,
+            });
+
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("MyStoreDBConnection"));
             });
+            services.AddMediatR(typeof(Startup));
             RegisterServices(services);
+            services.AddScoped<ICategoryService, CategoryService>();
+            
         }
 
         

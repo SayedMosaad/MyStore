@@ -11,5 +11,8 @@ namespace MyStore.Domain.Interfaces
     {
         IEnumerable<Category> GetCategories();
         void AddCategory(Category category);
+        void EditCategory(Category category);
+        void DeleteCategory(int id);
+        Category Find(int id);
     }
 }

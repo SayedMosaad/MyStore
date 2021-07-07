@@ -25,6 +25,10 @@
     {
       "library": "bootbox.js@5.5.2",
       "destination": "wwwroot/lib/bootbox.js/"
+    },
+    {
+      "library": "animateCSS@1.2.2",
+      "destination": "wwwroot/lib/animateCSS/"
     }
   ]
 }

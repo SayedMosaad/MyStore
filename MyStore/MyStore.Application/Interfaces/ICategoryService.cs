@@ -1,4 +1,5 @@
 ﻿using MyStore.Application.ViewModels;
+using MyStore.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace MyStore.Application.Interfaces
     {
         CategoryViewModel GetAllCategory();
         void Create(CategoryViewModel categoryViewModel);
+        void Delete(int id);
+        Category Find(int id);
+        void Edit(CategoryViewModel categoryViewModel);
     }
 }

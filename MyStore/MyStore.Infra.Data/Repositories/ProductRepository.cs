@@ -18,9 +18,34 @@ namespace MyStore.Infra.Data.Repositories
         {
             _db = db;
         }
+
+        public void AddProduct(Product product)
+        {
+            _db.Products.Add(product);
+            _db.SaveChanges();
+        }
+
+        public void DeleteProduct(int id)
+        {
+            var product = Find(id);
+            _db.Products.Remove(product);
+            _db.SaveChanges();
+        }
+
+        public Product Find(int id)
+        {
+            return _db.Products.FirstOrDefault(x => x.ID == id);
+        }
+
         public IEnumerable<Product> GetProducts()
         {
             return _db.Products.Include(x=>x.Category).ToList();
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            _db.Products.Update(product);
+            _db.SaveChanges();
         }
     }
 }
