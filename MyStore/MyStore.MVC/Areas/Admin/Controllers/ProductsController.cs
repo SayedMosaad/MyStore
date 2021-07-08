@@ -107,10 +107,6 @@ namespace MyStore.MVC.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            if(id==null)
-            {
-                return BadRequest();
-            }
             _productService.Delete(id);
             return Ok();
         }

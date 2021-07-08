@@ -1,0 +1,20 @@
+﻿@model MyStore.Application.ViewModels.ProductViewModel
+@{
+    ViewData["Title"] = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <img src="/images/products/@Model.ImageUrl" class="img-thumbnail img-fluid" />
+    </div>
+    <div class="col-md-6">
+        <h2>@Model.Name</h2>
+        <h5>@Model.Price &#8356;</h5>
+        <div class="card-text">
+            <p class="card-text">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+</div>

@@ -22,13 +22,14 @@
     <!-- Custom styles for this template-->
     <link href="/Admin/css/sb-admin-2.min.css" rel="stylesheet">
 
+    
+
+
 </head>
 
 <body id="page-top">
-    @{
-        string controller = @ViewContext.RouteData.Values["Controller"].ToString();
-        string action = @ViewContext.RouteData.Values["Action"].ToString();
-    }
+    @{ string controller = @ViewContext.RouteData.Values["Controller"].ToString();
+        string action = @ViewContext.RouteData.Values["Action"].ToString(); }
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -56,41 +57,37 @@
 
             @if (controller == "Categories")
             {
-                <li class="nav-item active">
-                    <a class="nav-link" asp-controller="Categories" asp-action="Index">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Categories</span>
-                    </a>
-                </li>
-            }
+<li class="nav-item active">
+    <a class="nav-link" asp-controller="Categories" asp-action="Index">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Categories</span>
+    </a>
+</li> }
             else
             {
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Categories" asp-action="Index">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Categories</span>
-                    </a>
-                </li>
-            }
+<li class="nav-item">
+    <a class="nav-link" asp-controller="Categories" asp-action="Index">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Categories</span>
+    </a>
+</li>}
 
             @if (controller == "Products")
             {
-                <li class="nav-item active">
-                    <a class="nav-link" asp-controller="Products" asp-action="Index">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Products</span>
-                    </a>
-                </li>
-            }
+<li class="nav-item active">
+    <a class="nav-link" asp-controller="Products" asp-action="Index">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Products</span>
+    </a>
+</li> }
             else
             {
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Products" asp-action="Index">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Products</span>
-                    </a>
-                </li>
-            }
+<li class="nav-item">
+    <a class="nav-link" asp-controller="Products" asp-action="Index">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Products</span>
+    </a>
+</li>}
 
 
 
@@ -172,8 +169,8 @@
 
     <!-- Core plugin JavaScript-->
     <script src="/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <!-- Custom scripts for all pages-->
+
 
     <script src="/Admin/js/sb-admin-2.min.js"></script>
     <script src="~/lib/bootbox.js/bootbox.js"></script>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyStore.Application.Interfaces;
 using System;
@@ -10,6 +11,7 @@ namespace MyStore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowOrgin")]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

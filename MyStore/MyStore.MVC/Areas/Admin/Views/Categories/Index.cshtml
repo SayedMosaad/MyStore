@@ -1,8 +1,8 @@
 ﻿@model MyStore.Application.ViewModels.CategoryViewModel
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-}
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
+
+<link href="~/lib/datatables/css/dataTables.bootstrap4.css" rel="stylesheet" />
 
 <div class="col-md-2 col-sm-6 mb-3">
     <a asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary">Add New Category</a>
@@ -13,17 +13,17 @@
     <div class="alert alert-warning" role="alert">
         <i class="bi-alarm bi-exclamation-triangle"></i>
         No Categories Found!
-    </div>
+    </div> 
 }
 else
 {
-
     <div class="row">
-        <table class="table table-striped">
+        <table class="table table-striped Display" id="mytable">
             <thead>
                 <tr class="d-flex">
                     <th class="col-4">Name</th>
-                    <th class="col-8">Picture</th>
+                    <th class="col-6">Picture</th>
+                    <th class="col-2"></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,17 +37,27 @@ else
                             <a href="javascript:;" data-id="@category.ID" class="fas fa-trash text-danger js-delete"></a>
                         </td>
                     </tr>
-
                 }
             </tbody>
         </table>
     </div>
-
 }
+
+
+
+
 @section Scripts
 {
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+
+
     <script>
         $(document).ready(function () {
+
+            $("#mytable").DataTable();
+
+
             $(".js-delete").on('click', function () {
                 var btn = $(this);
                 bootbox.confirm(

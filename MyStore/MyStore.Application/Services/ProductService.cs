@@ -49,7 +49,15 @@ namespace MyStore.Application.Services
         {
             return new ProductViewModel
             {
-                Products = _productRepository.GetProducts()
+                Products = _productRepository.GetAllProducts()
+            };
+        }
+
+        public ProductViewModel Getproducts(int id)
+        {
+            return new ProductViewModel
+            {
+                Products = _productRepository.Getproducts(id)
             };
         }
     }

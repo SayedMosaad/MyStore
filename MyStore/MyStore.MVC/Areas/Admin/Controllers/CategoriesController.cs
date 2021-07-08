@@ -40,14 +40,14 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CategoryViewModel model)
+        public ActionResult Create(CategoryViewModel model,IFormFile file)
         {
             if(ModelState.IsValid)
             {
                 var filename = UploadFile(model.Image) ?? string.Empty;
-                if(filename==string.Empty)
+                if (filename == string.Empty)
                 {
-                    ModelState.AddModelError("Image Error","Please Select an Image");
+                    ModelState.AddModelError("Image Error", "Please Select an Image");
                     return View(model);
                 }
                 model.ImageUrl = filename;
@@ -100,6 +100,23 @@ namespace MyStore.MVC.Areas.Admin.Controllers
             _categoryService.Delete(id);
             return Ok();
         }
+
+        public string Upload(IFormFile file)
+        {
+            string FileDic = "images/categories";
+            string filepath = Path.Combine(hosting.WebRootPath, FileDic);
+            if (!Directory.Exists(filepath))
+            {
+                Directory.CreateDirectory(filepath);
+            }
+            var uniquefilename = Guid.NewGuid() + "_" + file.FileName;
+            filepath = Path.Combine(filepath, uniquefilename);
+            using FileStream fs = System.IO.File.Create(filepath);
+            file.CopyTo(fs);
+            return uniquefilename;
+        }
+
+
 
         string UploadFile(IFormFile File)
         {

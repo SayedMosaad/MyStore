@@ -16,6 +16,9 @@ namespace MyStore.Application.Interfaces
         void Edit(ProductViewModel model);
         void Delete(int id);
         Product Find(int id);
+        ProductViewModel Getproducts(int id);
+
+
 
 
     }

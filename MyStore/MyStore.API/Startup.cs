@@ -25,6 +25,7 @@ namespace MyStore.API
         {
             Configuration = configuration;
         }
+        
 
         public IConfiguration Configuration { get; }
 
@@ -37,6 +38,7 @@ namespace MyStore.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyStore.API", Version = "v1" });
             });
+            services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MyStoreDBConnection"));
@@ -55,6 +57,7 @@ namespace MyStore.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyStore.API v1"));
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
 
             app.UseRouting();

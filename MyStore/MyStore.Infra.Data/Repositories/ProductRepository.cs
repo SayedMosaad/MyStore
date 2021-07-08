@@ -37,9 +37,14 @@ namespace MyStore.Infra.Data.Repositories
             return _db.Products.FirstOrDefault(x => x.ID == id);
         }
 
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Product> GetAllProducts()
         {
             return _db.Products.Include(x=>x.Category).ToList();
+        }
+
+        public IEnumerable<Product> Getproducts(int id)
+        {
+            return _db.Products.Where(x => x.CategoryId == id);
         }
 
         public void UpdateProduct(Product product)

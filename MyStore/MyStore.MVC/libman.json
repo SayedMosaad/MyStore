@@ -29,6 +29,18 @@
     {
       "library": "animateCSS@1.2.2",
       "destination": "wwwroot/lib/animateCSS/"
+    },
+    {
+      "library": "datatable@2.0.1",
+      "destination": "wwwroot/lib/datatable/"
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "library": "dropzone@5.9.2",
+      "destination": "wwwroot/lib/dropzone/"
     }
   ]
 }
