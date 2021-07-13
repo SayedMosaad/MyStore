@@ -106,7 +106,7 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         public ActionResult Upload(CategoryViewModel model)
         {
             var files = Request.Form.Files;
-            var images = new List<string>();
+            var obj = new object{ };
             foreach (var file in files)
             {
                 string FileDic = "images/categories";
@@ -119,9 +119,11 @@ namespace MyStore.MVC.Areas.Admin.Controllers
                 filepath = Path.Combine(filepath, uniquefilename);
                 using FileStream fs = System.IO.File.Create(filepath);
                 file.CopyTo(fs);
-                images.Add("images/categories/" + uniquefilename);
+                obj = new { link = "images/categories/" + uniquefilename };
+
             }
-            return Json(images);
+
+            return Json(obj);
             
         }
 

@@ -21,9 +21,10 @@
             <label asp-for="Image" class="form-label col-md-2 col-sm-6"></label>
 
             <div action="Create" class="col-md-8 dropzone" id="dropzoneForm">
+                
+                <input type="hidden" asp-for="ImageUrl" />
                 <div class="fallback">
-                    <input type="hidden" asp-for="Image" id="Image" />
-                    <input type="hidden" asp-for="ImageUrl" id="ImageUrl" />
+                    
 
                 </div>
 
@@ -72,10 +73,10 @@
                 var image = response["xhr"]["responseText"];
                 console.log(response);
 
-                var stringimage = JSON.stringify(image);
-                console.log(image);
+                var stringimage = JSON.parse(image);
+                console.log(stringimage);
 
-                $('#ImageUrl').val(stringimage);
+                $('#ImageUrl').val(stringimage["link"]);
             }
 
         };
