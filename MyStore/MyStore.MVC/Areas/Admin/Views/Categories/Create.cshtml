@@ -1,5 +1,5 @@
 ﻿@model MyStore.Application.ViewModels.CategoryViewModel
-@{ ViewData["Title"] = "Create";
+@{ ViewData["Title"] = "Add Category";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
 
 <link href="~/lib/dropzone/dropzone.css" rel="stylesheet" />
@@ -16,24 +16,31 @@
             </div>
         </div>
 
+
         <div class="form-group row">
             <label asp-for="Image" class="form-label col-md-2 col-sm-6"></label>
 
-            <div action="Create" class="col-md-8 dropzone" id="id-dropzone">
-                <input type="hidden" asp-for="ImageUrl">
+            <div action="Create" class="col-md-8 dropzone" id="dropzoneForm">
+                <div class="fallback">
+                    <input type="hidden" asp-for="Image" id="Image" />
+                    <input type="hidden" asp-for="ImageUrl" id="ImageUrl" />
+
+                </div>
+
 
             </div>
         </div>
-        <div class="row form-group">
-            <label asp-for="Image" class="form-label col-md-2 col-sm-6"></label>
-            <div id="picture-container" class="d-none col-md-4 offset-4">
-                <img src="@string.Empty" alt="Category Image" class="img-thumbnail img-fluid" style="width:150px;height:150px; " />
-            </div>
-        </div>
+
+        @*<div class="row form-group">
+                <label asp-for="Image" class="form-label col-md-2 col-sm-6"></label>
+                <div id="picture-container" class="d-none col-md-4 offset-4">
+                    <img src="@string.Empty" alt="Category Image" class="img-thumbnail img-fluid" style="width:150px;height:150px; " />
+                </div>
+            </div>*@
 
         <div class="row">
             <div class="col-md-8 offset-2">
-                <button type="submit" class="btn btn-primary mt-4"><i class="bi bi-check"></i>Add Category</button>
+                <button type="submit" class="btn btn-primary mt-4" id="submit-all"><i class="bi bi-check"></i>Add Category</button>
                 <a asp-action="Index" class="btn btn-outline-secondary mt-4"><i class="bi bi-x"></i>Cancel</a>
             </div>
         </div>
@@ -45,40 +52,45 @@
     <partial name="_Validation" />
 
     <script src="~/lib/dropzone/dropzone.min.js"></script>
-    <script>
+    <script type="text/javascript">
 
-        Dropzone.autoDiscover = false;
-        $(document).ready(function () {
+        Dropzone.options.dropzoneForm = {
 
-            $("#id-dropzone").dropzone({
+            autoProceessQueue: false,
+            url: "/Admin/Categories/Upload/",
+            maxFiles: 1,
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeAllFiles();
+                    this.addFile(file);
+                });
 
-                init: function () {
-                    this.on("thumbnail", function (file) {
-                        return file;
-                    })
-                    
-                },
+                
+            },
+            success: function (response) {
+                var image = response["xhr"]["responseText"];
+                console.log(response);
 
-                addRemoveLinks: true,
-                autoProcessQueue: false,
-                maxFiles: 2,
-                url: "/Create/",
-                success: function (file, response) {
-                    console.log(response);
-                }
-            });
+                var stringimage = JSON.stringify(image);
+                console.log(image);
+
+                $('#ImageUrl').val(stringimage);
+            }
+
+        };
 
 
-
-            //$("#Picture").on('change', function () {
-            //    var selectedFile = $(this).val().split('\\').pop();
-            //    $(this).siblings('label').text(selectedFile);
-            //    var picturecontainer = $('#picture-container');
-            //    var image = window.URL.createObjectURL(this.files[0]);
-            //    picturecontainer.removeClass('d-none');
-            //    picturecontainer.find('img').attr('src', '/images/categories/' + image);
+            //$(document).ready(function () {
+                //$("#Picture").on('change', function () {
+                //    var selectedFile = $(this).val().split('\\').pop();
+                //    $(this).siblings('label').text(selectedFile);
+                //    var picturecontainer = $('#picture-container');
+                //    var image = window.URL.createObjectURL(this.files[0]);
+                //    picturecontainer.removeClass('d-none');
+                //    picturecontainer.find('img').attr('src', '/images/categories/' + image);
+                //});
             //});
-        });
     </script>
 
 }

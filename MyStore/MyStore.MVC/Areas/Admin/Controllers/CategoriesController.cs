@@ -40,17 +40,19 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CategoryViewModel model,IFormFile file)
+        public ActionResult Create(CategoryViewModel model)
         {
-            if(ModelState.IsValid)
+
+            
+            if (ModelState.IsValid)
             {
-                var filename = UploadFile(model.Image) ?? string.Empty;
-                if (filename == string.Empty)
-                {
-                    ModelState.AddModelError("Image Error", "Please Select an Image");
-                    return View(model);
-                }
-                model.ImageUrl = filename;
+                //var filename = UploadFile(model.Image) ?? string.Empty;
+                //if (filename == string.Empty)
+                //{
+                //    ModelState.AddModelError("Image Error", "Please Select an Image");
+                //    return View(model);
+                //}
+                //model.ImageUrl = filename;
                 _categoryService.Create(model);
                 _toastNotification.AddSuccessToastMessage("Category Inserted succesfuly");
                 return RedirectToAction(nameof(Index));
@@ -101,20 +103,30 @@ namespace MyStore.MVC.Areas.Admin.Controllers
             return Ok();
         }
 
-        public string Upload(IFormFile file)
+        public ActionResult Upload(CategoryViewModel model)
         {
-            string FileDic = "images/categories";
-            string filepath = Path.Combine(hosting.WebRootPath, FileDic);
-            if (!Directory.Exists(filepath))
+            var files = Request.Form.Files;
+            var images = new List<string>();
+            foreach (var file in files)
             {
-                Directory.CreateDirectory(filepath);
+                string FileDic = "images/categories";
+                string filepath = Path.Combine(hosting.WebRootPath, FileDic);
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                var uniquefilename = Guid.NewGuid() + "_" + file.FileName;
+                filepath = Path.Combine(filepath, uniquefilename);
+                using FileStream fs = System.IO.File.Create(filepath);
+                file.CopyTo(fs);
+                images.Add("images/categories/" + uniquefilename);
             }
-            var uniquefilename = Guid.NewGuid() + "_" + file.FileName;
-            filepath = Path.Combine(filepath, uniquefilename);
-            using FileStream fs = System.IO.File.Create(filepath);
-            file.CopyTo(fs);
-            return uniquefilename;
+            return Json(images);
+            
         }
+
+
+
 
 
 

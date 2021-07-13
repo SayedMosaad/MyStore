@@ -17,6 +17,7 @@ namespace MyStore.Application.ViewModels
         [Required]
         public string Name { get; set; }
 
+        [Required]
         public string ImageUrl { get; set; }
         public IFormFile Image { get; set; }
 
