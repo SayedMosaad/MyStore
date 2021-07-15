@@ -46,13 +46,6 @@ namespace MyStore.MVC.Areas.Admin.Controllers
             
             if (ModelState.IsValid)
             {
-                //var filename = UploadFile(model.Image) ?? string.Empty;
-                //if (filename == string.Empty)
-                //{
-                //    ModelState.AddModelError("Image Error", "Please Select an Image");
-                //    return View(model);
-                //}
-                //model.ImageUrl = filename;
                 _categoryService.Create(model);
                 _toastNotification.AddSuccessToastMessage("Category Inserted succesfuly");
                 return RedirectToAction(nameof(Index));

@@ -5,10 +5,13 @@ using MyStore.Application.Interfaces;
 using MyStore.Application.ViewModels;
 using NToastNotify;
 using System;
+using System.Web;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+
 
 namespace MyStore.MVC.Areas.Admin.Controllers
 {
@@ -47,14 +50,6 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var filename = UploadFile(model.Image) ?? string.Empty;
-                //if(filename==null)
-                //{
-                //    ModelState.AddModelError("", "Please Select image");
-                //    model.Categories = _categoryService.GetAllCategory().Categories.ToList();
-                //    return View(model);
-                //}
-                //model.ImageUrl = filename;
                 _productService.Create(model);
                 _toastNotification.AddSuccessToastMessage("Product inserted");
                 return RedirectToAction(nameof(Index));
@@ -89,13 +84,6 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var filename = UploadFile(model.Image, model.ImageUrl);
-                //if(filename==null)
-                //{
-                //    ModelState.AddModelError("", "Please Select an Image");
-                //    return View(model);
-                //}
-                //model.ImageUrl = filename;
                 _productService.Edit(model);
                 _toastNotification.AddSuccessToastMessage("updated!");
                 return RedirectToAction(nameof(Index));
@@ -111,11 +99,10 @@ namespace MyStore.MVC.Areas.Admin.Controllers
             return Ok();
         }
 
-        public ActionResult Upload(CategoryViewModel model)
+        public ActionResult Upload(ProductViewModel model)
         {
             var files = Request.Form.Files;
             var obj = new object { };
-
             foreach (var file in files)
             {
                 string FileDic = "images/products";
@@ -129,7 +116,6 @@ namespace MyStore.MVC.Areas.Admin.Controllers
                 using FileStream fs = System.IO.File.Create(filepath);
                 file.CopyTo(fs);
                 obj = new { link = "/images/products/" + uniquefilename };
-
             }
             return Json(obj);
         }
