@@ -20,14 +20,14 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         private readonly IWebHostEnvironment hosting;
         private readonly IToastNotification _toastNotification;
 
-        public ProductsController(IProductService productService,ICategoryService categoryService, IWebHostEnvironment hosting,IToastNotification toastNotification)
+        public ProductsController(IProductService productService, ICategoryService categoryService, IWebHostEnvironment hosting, IToastNotification toastNotification)
         {
             _productService = productService;
             _categoryService = categoryService;
             this.hosting = hosting;
             _toastNotification = toastNotification;
         }
-        
+
         public IActionResult Index()
         {
             return View(_productService.GetAllProducts());
@@ -45,16 +45,16 @@ namespace MyStore.MVC.Areas.Admin.Controllers
 
         public ActionResult Create(ProductViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var filename = UploadFile(model.Image) ?? string.Empty;
-                if(filename==null)
-                {
-                    ModelState.AddModelError("", "Please Select image");
-                    model.Categories = _categoryService.GetAllCategory().Categories.ToList();
-                    return View(model);
-                }
-                model.ImageUrl = filename;
+                //var filename = UploadFile(model.Image) ?? string.Empty;
+                //if(filename==null)
+                //{
+                //    ModelState.AddModelError("", "Please Select image");
+                //    model.Categories = _categoryService.GetAllCategory().Categories.ToList();
+                //    return View(model);
+                //}
+                //model.ImageUrl = filename;
                 _productService.Create(model);
                 _toastNotification.AddSuccessToastMessage("Product inserted");
                 return RedirectToAction(nameof(Index));
@@ -68,18 +68,18 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var product = _productService.Find(id);
-            if(product==null)
+            if (product == null)
             {
                 return NotFound();
             }
             var model = new ProductViewModel()
             {
-                Id=product.ID,
-                Name=product.Name,
-                Description=product.Description,
-                ImageUrl=product.ImageUrl,
-                CategoryId=product.CategoryId,
-                Categories=_categoryService.GetAllCategory().Categories.ToList()
+                Id = product.ID,
+                Name = product.Name,
+                Description = product.Description,
+                ImageUrl = product.ImageUrl,
+                CategoryId = product.CategoryId,
+                Categories = _categoryService.GetAllCategory().Categories.ToList()
             };
             return View(model);
         }
@@ -87,15 +87,15 @@ namespace MyStore.MVC.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(ProductViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var filename = UploadFile(model.Image, model.ImageUrl);
-                if(filename==null)
-                {
-                    ModelState.AddModelError("", "Please Select an Image");
-                    return View(model);
-                }
-                model.ImageUrl = filename;
+                //var filename = UploadFile(model.Image, model.ImageUrl);
+                //if(filename==null)
+                //{
+                //    ModelState.AddModelError("", "Please Select an Image");
+                //    return View(model);
+                //}
+                //model.ImageUrl = filename;
                 _productService.Edit(model);
                 _toastNotification.AddSuccessToastMessage("updated!");
                 return RedirectToAction(nameof(Index));
@@ -110,6 +110,34 @@ namespace MyStore.MVC.Areas.Admin.Controllers
             _productService.Delete(id);
             return Ok();
         }
+
+        public ActionResult Upload(CategoryViewModel model)
+        {
+            var files = Request.Form.Files;
+            var obj = new object { };
+
+            foreach (var file in files)
+            {
+                string FileDic = "images/products";
+                string filepath = Path.Combine(hosting.WebRootPath, FileDic);
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                var uniquefilename = Guid.NewGuid() + "_" + file.FileName;
+                filepath = Path.Combine(filepath, uniquefilename);
+                using FileStream fs = System.IO.File.Create(filepath);
+                file.CopyTo(fs);
+                obj = new { link = "/images/products/" + uniquefilename };
+
+            }
+            return Json(obj);
+        }
+
+        //public ActionResult UploadMultiple()
+        //{
+
+        //}
 
 
         string UploadFile(IFormFile File)

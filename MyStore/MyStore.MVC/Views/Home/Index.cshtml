@@ -9,7 +9,7 @@
     {
         <div class="card col-md-3">
             <a asp-controller="Home" asp-action="Getproducts" asp-route-id="@category.ID">
-                <img src="/images/categories/@category.ImageUrl" style="width:100%;height:200px;object-fit:contain;" class="img-fluid img-thumbnail" />
+                <img src="@category.ImageUrl" style="width:100%;height:200px;object-fit:contain;" class="img-fluid img-thumbnail" />
                 <div class="card-body">
                     <p class="card-text">
                         @category.Name

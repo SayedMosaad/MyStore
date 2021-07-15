@@ -17,25 +17,25 @@
             {
 <table class="table table-hover" id="ProductTable">
     <thead>
-        <tr class="d-flex">
-            <th class="col-2">Name</th>
-            <th class="col-2"> Price</th>
-            <th class="col-3">Description</th>
-            <th class="col-2">Picture</th>
-            <th class="col-2">Category</th>
-            <th class="col-1"></th>
+        <tr >
+            <th>Name</th>
+            <th> Price</th>
+            <th>Description</th>
+            <th>Picture</th>
+            <th>Category</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var product in Model.Products)
         {
-<tr class="d-flex parent">
-    <td class="col-2">@product.Name</td>
-    <td class="col-2"> @product.Price</td>
-    <td class="col-3">@product.Description</td>
-    <td class="col-2"><img src="/images/products/@product.ImageUrl" style="width:100%; height:200px; object-fit:contain;" /></td>
-    <td class="col-2">@product.Category.Name</td>
-    <td class="col-1">
+<tr class="parent">
+    <td>@product.Name</td>
+    <td> @product.Price</td>
+    <td>@product.Description</td>
+    <td><img src="@product.ImageUrl" style="width:100%; height:200px; object-fit:contain;" /></td>
+    <td>@product.Category.Name</td>
+    <td>
         <a asp-controller="Products" asp-action="Edit" asp-route-id="@product.ID" class="fas fa-edit"></a>
         <a href="javascript:;" data-id="@product.ID" class="js-delete fas fa-trash text-danger"></a>
     </td>

@@ -41,6 +41,10 @@
     {
       "library": "dropzone@5.9.2",
       "destination": "wwwroot/lib/dropzone/"
+    },
+    {
+      "library": "froala-editor@4.0.3",
+      "destination": "wwwroot/lib/froala-editor/"
     }
   ]
 }

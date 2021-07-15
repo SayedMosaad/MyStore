@@ -18,13 +18,15 @@
     </div>
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="ImageUrl" />
+
+
     <div class="form-group row">
-        <label asp-for="Image" class="form-label col-md-2 col-sm-6"></label>
-        <div class="col-md-6 col-sm-6">
-            <input class="form-control" type="file" asp-for="Image" id="ProductPicture">
+        <label asp-for="ImageUrl" class="form-label col-md-2 col-sm-6"></label>
+        <div class="col-md-6 col-sm-6 dropzone" id="dropzoneForm">
+            <input type="hidden" asp-for="ImageUrl" id="ImageUrl">
         </div>
         <div id="picture-container" class="col-md-4 col-sm-6">
-            <img src="/images/products/@Model.ImageUrl" alt="Product Image" class="img-thumbnail img-fluid" style="width:200px;height:150px; " />
+            <img src="@Model.ImageUrl" alt="Product Image" class="img-thumbnail img-fluid" style="width:200px;height:150px; object-fit:contain;  " />
         </div>
     </div>
     <div class="form-group row">
@@ -63,15 +65,41 @@
 
     <partial name="_Validation" />
     <script>
-        $(document).ready(function () {
-            $("#ProductPicture").on('change', function () {
-                var selectedFile = $(this).val().split('\\').pop();
-                $(this).siblings('label').text(selectedFile);
-                var picturecontainer = $('#picture-container');
-                var image = window.URL.createObjectURL(this.files[0]);
-                picturecontainer.find('img').attr('src', image);
-            });
-        });
+
+        Dropzone.options.dropzoneForm = {
+
+            autoProceessQueue: false,
+            url: "/Admin/Categories/Upload/",
+            maxFiles: 1,
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeAllFiles();
+                    this.addFile(file);
+                });
+
+
+            },
+            success: function (response) {
+                var image = response["xhr"]["responseText"];
+
+                var stringimage = JSON.parse(image);
+                console.log(stringimage);
+
+                $('#ImageUrl').val(stringimage["link"]);
+            }
+
+        };
+
+        //$(document).ready(function () {
+        //    $("#ProductPicture").on('change', function () {
+        //        var selectedFile = $(this).val().split('\\').pop();
+        //        $(this).siblings('label').text(selectedFile);
+        //        var picturecontainer = $('#picture-container');
+        //        var image = window.URL.createObjectURL(this.files[0]);
+        //        picturecontainer.find('img').attr('src', image);
+        //    });
+        //});
     </script>
 
 }

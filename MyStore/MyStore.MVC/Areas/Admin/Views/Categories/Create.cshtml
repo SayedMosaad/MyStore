@@ -2,7 +2,7 @@
 @{ ViewData["Title"] = "Add Category";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
 
-<link href="~/lib/dropzone/dropzone.css" rel="stylesheet" />
+
 
 <div class="container">
     <form asp-controller="Categories" asp-action="Create" method="post" enctype="multipart/form-data">
@@ -52,7 +52,7 @@
 {
     <partial name="_Validation" />
 
-    <script src="~/lib/dropzone/dropzone.min.js"></script>
+    
     <script type="text/javascript">
 
         Dropzone.options.dropzoneForm = {

@@ -2,7 +2,7 @@
 @{ ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
 
-<link href="~/lib/datatables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+
 
 <div class="col-md-2 col-sm-6 mb-3">
     <a asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary">Add New Category</a>
@@ -31,7 +31,7 @@ else
                 {
                     <tr class="d-flex parent">
                         <td class="col-3">@category.Name</td>
-                        <td class="col-6"><img src="/images/categories/@category.ImageUrl" style="width:150px;height:150px; object-fit:contain" class="card-img-top img-fluid" alt="@category.Name"></td>
+                        <td class="col-6"><img src="@category.ImageUrl" style="width:150px;height:150px; object-fit:contain" class="card-img-top img-fluid" alt="@category.Name"></td>
                         <td class="col-3">
                             <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.ID" class="fas fa-edit text-primary"></a>
                             <a href="javascript:;" data-id="@category.ID" class="fas fa-trash text-danger js-delete"></a>
@@ -48,8 +48,7 @@ else
 
 @section Scripts
 {
-    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
-    <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+
 
 
     <script>

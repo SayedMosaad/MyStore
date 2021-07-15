@@ -1,8 +1,10 @@
 ﻿@model MyStore.Application.ViewModels.ProductViewModel
-@{
-    ViewData["Title"] = "Add Product";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-}
+@{ ViewData["Title"] = "Add Product";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml"; }
+
+
+<link href="~/lib/froala-editor/css/froala_editor.min.css" rel="stylesheet" />
+<link href="~/lib/froala-editor/css/froala_style.min.css" rel="stylesheet" />
 
 <h2>Add Product</h2>
 
@@ -17,26 +19,23 @@
         </div>
     </div>
     <div class="form-group row">
-        <label asp-for="Image" class="form-label col-md-2 col-sm-6"></label>
-        <div class="col-md-6 col-sm-6">
-            <input class="form-control" type="file" asp-for="Image" id="ProductPicture">
-        </div>
-        <div id="picture-container" class="d-none col-md-4 col-sm-6">
-            <img src="@string.Empty" alt="Product Image" class="img-thumbnail img-fluid" style="width:150px;height:150px; " />
+        <label asp-for="ImageUrl" class="form-label col-md-2 col-sm-6"></label>
+        <div class="col-md-6 col-sm-6 dropzone" id="dropzoneForm">
+            <input type="hidden" asp-for="ImageUrl" id="ImageUrl">
         </div>
     </div>
     <div class="form-group row">
         <label class="col-md-2 col-sm-6 text-muted" asp-for="Price"></label>
 
         <div class="col-md-6 col-sm-6">
-            <input type="text" class="form-control" asp-for="Price"  />
+            <input type="text" class="form-control" asp-for="Price" />
             <span asp-validation-for="Price" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-md-2 col-sm-6 text-muted" asp-for="Description"></label>
         <div class="col-md-6 col-sm-6">
-            <textarea asp-for="Description" cols="4" rows="5" class="form-control"></textarea>
+            <textarea id="Description" asp-for="Description" cols="4" rows="5" class="form-control"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
@@ -56,16 +55,48 @@
 {
 
     <partial name="_Validation" />
+    <script src="~/lib/froala-editor/js/froala_editor.min.js"></script>
     <script>
+
+        Dropzone.options.dropzoneForm = {
+
+            autoProcessQueue: false,
+            url: "/Admin/products/Upload/",
+            maxFiles: 1,
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeAllFiles();
+                    this.addFile(file);
+                });
+
+
+            },
+            success: function (response) {
+                var image = response["xhr"]["responseText"];
+
+                var stringimage = JSON.parse(image);
+                console.log(stringimage);
+
+                $('#ImageUrl').val(stringimage["link"]);
+            }
+
+        };
+
+        new FroalaEditor('#Description', { toolbarInline: false })
+
         $(document).ready(function () {
-            $("#ProductPicture").on('change', function () {
-                var selectedFile = $(this).val().split('\\').pop();
-                $(this).siblings('label').text(selectedFile);
-                var picturecontainer = $('#picture-container');
-                var image = window.URL.createObjectURL(this.files[0]);
-                picturecontainer.removeClass('d-none');
-                picturecontainer.find('img').attr('src', image);
-            });
+
+            //$('#Description').edittable();
+
+            //$("#ProductPicture").on('change', function () {
+            //    var selectedFile = $(this).val().split('\\').pop();
+            //    $(this).siblings('label').text(selectedFile);
+            //    var picturecontainer = $('#picture-container');
+            //    var image = window.URL.createObjectURL(this.files[0]);
+            //    picturecontainer.removeClass('d-none');
+            //    picturecontainer.find('img').attr('src', image);
+            //});
         });
     </script>
 

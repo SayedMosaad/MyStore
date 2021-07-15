@@ -119,7 +119,7 @@ namespace MyStore.MVC.Areas.Admin.Controllers
                 filepath = Path.Combine(filepath, uniquefilename);
                 using FileStream fs = System.IO.File.Create(filepath);
                 file.CopyTo(fs);
-                obj = new { link = "images/categories/" + uniquefilename };
+                obj = new { link = "/images/categories/" + uniquefilename };
 
             }
 
